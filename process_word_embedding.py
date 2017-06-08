@@ -26,6 +26,6 @@ for word,index in index_dict.items():
 # assemble the model
 model = Sequential() # or Graph or whatever
 model.add(Embedding(output_dim=rnn_dim, input_dim=n_symbols + 1, mask_zero=True, weights=[embedding_weights])) # note you have to put embedding weights in a list by convention
-model.add(LSTM(dense_dim, return_sequences=False))  
+model.add(LSTM(dense_dim, return_sequences=False))
 model.add(Dropout(0.5))
 model.add(Dense(n_symbols, activation='softmax')) # for this is the architecture for predicting the next word, but insert your own here

@@ -1,4 +1,7 @@
-'''Trains a LSTM on the IMDB sentiment classification task.
+'''
+Preload word embeddings from google pretrianed w2v by 300 million news words.
+
+Trains a LSTM on the IMDB sentiment classification task.
 The dataset is actually too small for LSTM to be of any advantage
 compared to simpler, much faster methods such as TF-IDF + LogReg.
 Notes:
@@ -35,6 +38,8 @@ for word in wordVocab:
 	index_dict[word] = counter
 	counter += 1
 	word_vectors[word] = model[word]
+	if counter >= 1000:
+		break
 
 vocab_dim = 300 # dimensionality of your word vectors
 n_symbols = len(index_dict) + 1 # adding 1 to account for 0th index (for masking)
@@ -89,10 +94,9 @@ model.compile(loss='binary_crossentropy',
 print('Train...')
 model.fit(x_train, y_train,
 		  batch_size=batch_size,
-		  epochs=15,
+		  epochs=2,
 		  validation_data=(x_test, y_test))
 score, acc = model.evaluate(x_test, y_test,
 							batch_size=batch_size)
 print('Test score:', score)
 print('Test accuracy:', acc)
-
